@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark-theme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتب المحامي محمد هاني العطار | للمحاماة والاستشارات القانونية</title>
+    <!-- الخطوط العربية الفاخرة -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ثيمات الألوان (داكن ونهاري) */
+        :root.dark-theme {
+            --bg-main: #071321;
+            --bg-secondary: #0d1b2a;
+            --bg-card: #0f2238;
+            --text-main: #f0f4f8;
+            --text-light: #94a3b8;
+            --accent-gold: #c5a880;
+            --accent-gold-hover: #d4b892;
+            --nav-bg: rgba(7, 19, 33, 0.85);
+            --border-color: rgba(197, 168, 128, 0.2);
+            --card-border: rgba(255, 255, 255, 0.05);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --scale-letter: #c5a880; /* لون الحرف في الليلي */
+        }
+
+        :root.light-theme {
+            --bg-main: #f1f5f9;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-light: #475569;
+            --accent-gold: #9a7b4c;
+            --accent-gold-hover: #80633b;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --border-color: rgba(154, 123, 76, 0.25);
+            --card-border: rgba(0, 0, 0, 0.06);
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --scale-letter: #071321; /* لون الحرف في النهاري (كحلي واضح) */
+        }
+
+        * {
+            box-sizing: border-box;
+            outline: none;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* === شريط التقدم العلوي لقراءة الصفحة === */
+        .progress-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 1100;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-gold), #e2c290);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        /* === شريط التنقل العلوي الزجاجي === */
+        nav {
+            position: fixed;
+            top: 4px;
+            left: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(14px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 40px;
+            z-index: 1000;
+            box-shadow: 0 4px 30px var(--shadow-color);
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.4s ease, border-color 0.4s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-gold);
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        nav a:hover {
+            color: var(--accent-gold);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* زر تبديل الثيم (ليلي/نهاري) */
+        .theme-toggle {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--accent-gold);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            background: var(--accent-gold);
+            color: var(--bg-main);
+        }
+
+        /* === الجزء العلوي واللوجو الإبداعي === */
+        header {
+            background: radial-gradient(circle at center, var(--bg-secondary) 0%, var(--bg-main) 100%);
+            color: var(--text-main);
+            padding: 150px 0 80px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 15px 40px var(--shadow-color);
+            z-index: 10;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .law-logo-svg {
+            width: 145px;
+            height: 145px;
+            margin-bottom: 25px;
+            filter: drop-shadow(0px 12px 25px rgba(0,0,0,0.3));
+        }
+
+        /* انيميشن الميزان المتناسق تماماً */
+        .rotating-ring {
+            transform-origin: 75px 75px;
+            animation: spinRing 40s linear infinite;
+        }
+
+        .balance-system {
+            transform-origin: 75px 47px;
+            animation: tiltSystem 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes spinRing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes tiltSystem {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(2.2deg); }
+            75% { transform: rotate(-2.2deg); }
+        }
+
+        .lawyer-name {
+            font-family: 'Amiri', serif;
+            font-size: 42px;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text-main);
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .lawyer-name::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-gold);
+            margin: 12px auto 0;
+            border-radius: 2px;
+            transition: width 0.4s ease;
+        }
+
+        .lawyer-name:hover::after {
+            width: 150px;
+        }
+
+        .lawyer-title {
+            font-size: 16px;
+            font-weight: 400;
+            margin: 18px 0 0;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: var(--bg-card);
+            padding: 8px 22px;
+            border-radius: 20px;
+            display: inline-block;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        /* === محتوى الصفحة والأقسام === */
+        .container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 25px;
+        }
+        
+        section {
+            background: var(--bg-card);
+            margin-bottom: 50px;
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border: 1px solid var(--card-border);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, background-color 0.4s ease;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        
+        section.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section:hover {
+            box-shadow: 0 25px 50px var(--shadow-color);
+            transform: translateY(-6px);
+        }
+
+        section h2 {
+            font-size: 28px;
+            color: var(--text-main);
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        section h2::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 26px;
+            background-color: var(--accent-gold);
+            border-radius: 4px;
+        }
+
+        p {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        /* === السيرة الذاتية وقوائم المعلومات === */
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .info-list li {
+            background-color: var(--bg-main);
+            margin-bottom: 14px;
+            padding: 18px 24px;
+            border-radius: 14px;
+            border-right: 4px solid transparent;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+        }
+        .info-list li:hover {
+            border-right-color: var(--accent-gold);
+            transform: translateX(-6px);
+            background-color: var(--bg-secondary);
+        }
+        .info-list li strong {
+            color: var(--text-main);
+            margin-left: 15px;
+            min-width: 130px;
+        }
+
+        h3.subsection-title {
+            color: var(--text-main);
+            font-size: 20px;
+            font-weight: 700;
+            margin-top: 35px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        /* === شبكة الخدمات الاحترافية مع تأثير 3D === */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            perspective: 1000px;
+        }
+        .service-card {
+            background-color: var(--bg-main);
+            padding: 35px;
+            border-radius: 18px;
+            border: 1px solid var(--card-border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+        
+        .service-card:hover {
+            background-color: var(--bg-secondary);
+            border-color: var(--accent-gold);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px var(--shadow-color);
+        }
+        
+        .service-card h3 {
+            font-size: 20px;
+            margin-top: 0;
+            color: var(--text-main);
+            transition: color 0.3s ease;
+            font-weight: 700;
+        }
+        .service-card:hover h3 {
+            color: var(--accent-gold);
+        }
+        
+        .service-card p {
+            margin-bottom: 0;
+            font-size: 15px;
+            color: var(--text-light);
+        }
+
+        /* === مميزات المكتب === */
+        .features-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .features-list li {
+            padding: 24px;
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            background: var(--bg-main);
+        }
+        .features-list li:hover {
+            background-color: var(--bg-secondary);
+            border-color: var(--accent-gold);
+            transform: translateY(-5px);
+        }
+        .features-list li strong {
+            color: var(--text-main);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        /* === أزرار التواصل الإبداعية === */
+        .cta-section {
+            text-align: center;
+            margin: 70px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        .cta-section.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .cta-title {
+            font-size: 22px;
+            color: var(--text-main);
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 35px;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 17px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 8px 20px var(--shadow-color);
+        }
+        
+        .btn:hover {
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-whatsapp { background-color: #25D366; }
+        .btn-whatsapp:hover { background-color: #1ebe5d; }
+        .btn-facebook { background-color: #1877F2; }
+        .btn-facebook:hover { background-color: #145dbf; }
+
+        /* === زر العودة للأعلى === */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background-color: var(--accent-gold);
+            color: var(--bg-main);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            transition: all 0.3s ease;
+            z-index: 999;
+            font-weight: bold;
+            font-size: 22px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+        .scroll-top.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .scroll-top:hover {
+            background-color: var(--text-main);
+            color: var(--accent-gold);
+            transform: translateY(-5px);
+        }
+
+        /* === تذييل الصفحة === */
+        footer {
+            background-color: var(--bg-secondary);
+            color: var(--text-light);
+            text-align: center;
+            padding: 35px;
+            margin-top: 60px;
+            font-size: 15px;
+            border-top: 3px solid var(--accent-gold);
+            transition: background-color 0.4s ease;
+        }
+        footer strong { color: var(--text-main); }
+
+        /* === الشاشات الصغيرة === */
+        @media (max-width: 768px) {
+            nav { padding: 12px 20px; }
+            .nav-links { gap: 15px; font-size: 13px; }
+            header { padding: 130px 15px 60px; }
+            .lawyer-name { font-size: 30px; }
+            .container { margin: 25px auto; padding: 0 15px; }
+            section { padding: 30px 20px; margin-bottom: 25px; }
+            section h2 { font-size: 22px; }
+            .social-buttons { flex-direction: column; width: 100%; max-width: 280px; margin: 0 auto; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط تقدم القراءة -->
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- شريط التنقل العلوي -->
+    <nav>
+        <button class="theme-toggle" id="themeToggleBtn" title="تغيير المظهر">🌙</button>
+        <div class="nav-links">
+            <a href="#about">من نحن</a>
+            <a href="#resume">السيرة الذاتية</a>
+            <a href="#services">خدماتنا</a>
+            <a href="#why-us">لماذا تختارنا</a>
+        </div>
+    </nav>
+
+    <!-- الهيدر واللوجو الإبداعي -->
+    <header>
+        <div class="logo-container">
+            <svg class="law-logo-svg" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+                <!-- الإطار الخارجي الدائر المتحرك -->
+                <circle cx="75" cy="75" r="70" fill="none" stroke="var(--accent-gold)" stroke-width="2" stroke-dasharray="12 8" class="rotating-ring"/>
+                <circle cx="75" cy="75" r="62" fill="var(--bg-card)" stroke="var(--accent-gold)" stroke-width="1" opacity="0.3"/>
+                
+                <!-- مجموعة الميزان المتناسقة تماماً ككتلة واحدة -->
+                <g class="balance-system">
+                    <!-- العمود المركزي -->
+                    <path d="M73 25 L77 25 L75 115 Z" fill="var(--accent-gold)"/>
+                    <rect x="65" y="45" width="20" height="4" fill="var(--accent-gold)" rx="2"/>
+                    
+                    <!-- عارضة الميزان -->
+                    <line x1="30" y1="47" x2="120" y2="47" stroke="var(--accent-gold)" stroke-width="3.5" stroke-linecap="round"/>
+
+                    <!-- الكفة اليسرى مع الحرف M المتكيف اللون -->
+                    <g>
+                        <line x1="30" y1="47" x2="15" y2="85" stroke="var(--accent-gold)" stroke-width="2"/>
+                        <line x1="30" y1="47" x2="45" y2="85" stroke="var(--accent-gold)" stroke-width="2"/>
+                        <path d="M10 85 Q 30 102 50 85 Z" fill="var(--accent-gold)"/>
+                        <text x="30" y="80" font-family="'Cairo', sans-serif" font-weight="800" font-size="16" fill="var(--scale-letter)" text-anchor="middle">M</text>
+                    </g>
+
+                    <!-- الكفة اليمنى مع الحرف A المتكيف اللون -->
+                    <g>
+                        <line x1="120" y1="47" x2="105" y2="85" stroke="var(--accent-gold)" stroke-width="2"/>
+                        <line x1="120" y1="47" x2="135" y2="85" stroke="var(--accent-gold)" stroke-width="2"/>
+                        <path d="M100 85 Q 120 102 140 85 Z" fill="var(--accent-gold)"/>
+                        <text x="120" y="80" font-family="'Cairo', sans-serif" font-weight="800" font-size="16" fill="var(--scale-letter)" text-anchor="middle">A</text>
+                    </g>
+                </g>
+            </svg>
+
+            <h1 class="lawyer-name">محمد هاني العطار</h1>
+            <div class="lawyer-title">محامي ومستشار قانوني</div>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- قسم من نحن -->
+        <section id="about" class="reveal-section">
+            <h2>من نحن</h2>
+            <p>
+                مكتب المحامي محمد هاني العطار للمحاماة والاستشارات القانونية، هو كيان قانوني متكامل يهدف إلى تقديم أفضل الخدمات والحلول القانونية لعملائنا. بفضل خبراتنا الأكاديمية والعملية الممتدة محلياً وإقليمياً، والموثقة بعضوية نقابة المحامين المصرية واتحاد المحامين العرب، نلتزم بالدفاع عن حقوق موكلينا وتقديم استشارات قانونية دقيقة تلبي احتياجاتهم في مختلف فروع القانون. نسعى دائماً لبناء علاقات طويلة الأمد مع عملائنا مبنية على الثقة، النزاهة، والشفافية.
+            </p>
+        </section>
+
+        <!-- قسم السيرة الذاتية -->
+        <section id="resume" class="reveal-section">
+            <h2>السيرة الذاتية</h2>
+            <ul class="info-list">
+                <li><strong>الجنسية:</strong> مصري</li>
+                <li><strong>الصفة:</strong> محامي ومستشار قانوني</li>
+            </ul>
+            
+            <h3 class="subsection-title">المؤهلات العلمية</h3>
+            <ul class="info-list">
+                <li>حاصل على ماجستير في القانون العام والقانون الجنائي - جامعة السادات.</li>
+                <li>حاصل على شهادة البكالوريوس في الحقوق - جامعة الزقازيق عام 2020م.</li>
+            </ul>
+
+            <h3 class="subsection-title">الخبرات العملية والعضويات</h3>
+            <ul class="info-list">
+                <li>عضو نقابة المحامين المصرية.</li>
+                <li>عضو اتحاد المحامين العرب.</li>
+                <li>عمل بشركة لاند مارك صبور.</li>
+                <li>تدريب بالإدارة القانونية بوزارة الشباب.</li>
+                <li>دورة تدريبية في المنظمة العربية للتنمية الإدارية بالقاهرة بعنوان "البرنامج المتكامل في القانون".</li>
+                <li>دورة العقود الإدارية والتجارية بالرياض.</li>
+            </ul>
+        </section>
+
+        <!-- قسم الخدمات -->
+        <section id="services" class="reveal-section">
+            <h2>أهم خدماتنا</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>الاستشارات القانونية</h3>
+                    <p>تقديم الاستشارات القانونية فيما يتعلق بالنزاعات التجارية وفي مواطن الخلاف المحتمل في عقود الشركات والعقود بشكل عام.</p>
+                </div>
+                <div class="service-card">
+                    <h3>التمثيل القانوني</h3>
+                    <p>تمثيل الأشخاص أمام الجهات الحكومية وغير الحكومية وإنهاء الإجراءات الرسمية.</p>
+                </div>
+                <div class="service-card">
+                    <h3>المرافعة والدفاع</h3>
+                    <p>المرافعة أمام المحاكم الجزائية، الابتدائية، التجارية، الاستئناف، الإدارية، والهيئات واللجان القضائية.</p>
+                </div>
+                <div class="service-card">
+                    <h3>تأسيس الشركات</h3>
+                    <p>شركات الأشخاص، شركات الأموال، الشركات ذات الطبيعة الخاصة، الشركات ذات المسؤولية المحدودة، الشركات المساهمة، شركات الاستثمار الأجنبي، وفروع الشركات الأجنبية، وتحويل الشركات والتعديل عليها.</p>
+                </div>
+                <div class="service-card">
+                    <h3>الخدمات الشاملة</h3>
+                    <p>تمثيل الموكلين في جميع القضايا المدنية، الأسرية، الجنائية، التجارية، الإدارية، والعمالية، بالإضافة إلى استخراج رخص البناء، إنهاء إجراءات التصالح على المخالفات، وتوثيق العقود.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم لماذا تختارنا -->
+        <section id="why-us" class="reveal-section">
+            <h2>لماذا تختارنا؟</h2>
+            <ul class="features-list">
+                <li><strong>الخبرة المحلية والدولية</strong> دراية كاملة بالقوانين والأنظمة المعمول بها لضمان أفضل الحلول.</li>
+                <li><strong>الشفافية والسرية</strong> الحفاظ التام على خصوصية العملاء وسرية قضاياهم ومستنداتهم.</li>
+                <li><strong>السرية التامة</strong> نعتبر سرية الموكل ميثاق شرف لا يقبل المساس.</li>
+                <li><strong>السرعة والإنجاز</strong> كفاءة عالية في إنهاء الإجراءات القانونية بأسرع وقت ممكن.</li>
+            </ul>
+        </section>
+
+        <!-- قسم أزرار التواصل -->
+        <div class="cta-section reveal-section">
+            <p class="cta-title">لا تتردد في طلب الاستشارة القانونية، تواصل معنا الآن:</p>
+            <div class="social-buttons">
+                <a href="https://wa.me/201552857305" target="_blank" class="btn btn-whatsapp">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12.031 6.172c-2.202 0-3.991 1.789-3.991 3.991 0 .585.131 1.153.377 1.66l-2.367 2.367 2.321-.482c.558.426 1.239.663 1.937.663 2.202 0 3.991-1.789 3.991-3.991 0-2.202-1.789-3.991-3.991-3.991zm0-2.172c3.399 0 6.163 2.764 6.163 6.163 0 1.201-.343 2.326-.938 3.284l1.19 3.868-4.01-1.12c-.917.522-1.983.821-3.12.821-3.399 0-6.163-2.764-6.163-6.163 0-3.399 2.764-6.163 6.163-6.163z"/></svg>
+                    تواصل معنا عبر واتساب
+                </a>
+                <a href="https://www.facebook.com/share/14jbbViVHXC/" target="_blank" class="btn btn-facebook">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 10h-2v2h2v6h3v-6h1.82l.18-2h-2v-.833c0-.478.096-.667.558-.667h1.442v-2.5h-2.404c-1.798 0-2.596.792-2.596 2.308v1.692z"/></svg>
+                    تابعنا على فيسبوك
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- زر العودة للأعلى -->
+    <a href="#" class="scroll-top" id="scrollTopBtn">↑</a>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <p>جميع الحقوق محفوظة © مكتب المحامي <strong>محمد هاني العطار</strong> | للمحاماة والاستشارات القانونية</p>
+    </footer>
+
+    <!-- سكربت التشغيل -->
+    <script>
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const htmlElement = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark-theme')) {
+                htmlElement.classList.remove('dark-theme');
+                htmlElement.classList.add('light-theme');
+                themeToggleBtn.textContent = '☀️';
+            } else {
+                htmlElement.classList.remove('light-theme');
+                htmlElement.classList.add('dark-theme');
+                themeToggleBtn.textContent = '🌙';
+            }
+        });
+
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+            
+            const scrollTopBtn = document.getElementById('scrollTopBtn');
+            if (winScroll > 300) {
+                scrollTopBtn.classList.add('active');
+            } else {
+                scrollTopBtn.classList.remove('active');
+            }
+        });
+
+        const observerOptions = { threshold: 0.15 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const xc = rect.width / 2;
+                const yc = rect.height / 2;
+                const dx = (x - xc) / 15;
+                const dy = (y - yc) / 15;
+                card.style.transform = `translateY(-8px) scale(1.02) rotateX(${-dy}deg) rotateY(${dx}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1) rotateX(0) rotateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
